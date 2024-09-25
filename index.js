@@ -5,10 +5,11 @@ const bodyParser = require("body-parser");
 const sequelize = require("./src/config/db");
 const Conversation = require("./src/models/conversation");
 const Message = require("./src/models/message");
+const { SERVER_PORT } = require("./src/config/allEnv");
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
-const PORT = process.env.PORT || 3000;
+const PORT = SERVER_PORT;
 
 // Middleware
 app.use(bodyParser.json());
