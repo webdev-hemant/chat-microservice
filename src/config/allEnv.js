@@ -4,6 +4,7 @@ const CURRENT_HOST = process.env.CURRENT_HOST;
 const SERVER_PORT = process.env.SERVER_PORT;
 const NODE_ENV = process.env.NODE_ENV;
 const JWT_SECRET = process.env.JWT_SECRET;
+const API_GATEWAY_ENDPOINT = process.env.API_GATEWAY_ENDPOINT;
 
 const DB = {
   DB_NAME: process.env.DB_NAME,
@@ -14,4 +15,11 @@ const DB = {
   DB_URL: process.env.DB_URL,
 };
 
-module.exports = { CURRENT_HOST, SERVER_PORT, NODE_ENV, JWT_SECRET, DB };
+module.exports = {
+  CURRENT_HOST,
+  SERVER_PORT,
+  NODE_ENV,
+  JWT_SECRET,
+  API_GATEWAY_ENDPOINT,
+  DB,
+};

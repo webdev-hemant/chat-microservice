@@ -1,32 +1,33 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db"); // Adjust path as necessary
+const sequelize = require("../config/db");
 
 const Message = sequelize.define(
   "Message",
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
     conversationId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Conversations",
-        key: "id",
-      },
-    },
-    username: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
     },
-    message: {
+    senderId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    content: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+    isRead: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {
-    timestamps: false,
+    tableName: "messages",
   }
 );
 
