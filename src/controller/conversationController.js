@@ -44,7 +44,7 @@ exports.getConversations = async (req, res) => {
       order: [["createdAt", "ASC"]],
     });
 
-    res.json(conversations);
+    res.json({ total: conversations.length, data: conversations });
   } catch (error) {
     console.error("Error fetching conversations:", error);
     res.status(500).json({ message: error.message });
