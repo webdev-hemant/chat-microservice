@@ -37,7 +37,7 @@ exports.getConversations = async (req, res) => {
       include: [
         {
           model: Message,
-          limit: 20, // Limit to the latest 20 messages
+          limit: 10, // Limit to the latest 20 messages
           order: [["createdAt", "DESC"]], // Order messages by creation date
         },
       ],
