@@ -17,7 +17,6 @@ const runSocket = (io) => {
       try {
         const user = await verifyToken(token);
         socket.user = user;
-        // console.log({ socketUser: user });
         return next();
       } catch (err) {
         console.log({ err: err?.response?.statusText });
@@ -26,18 +25,19 @@ const runSocket = (io) => {
     });
 
     socket.on("joinConversation", (conversationId) => {
+      console.log(`${socket?.user?.username} joined room ${conversationId}`);
       socket.join(conversationId);
-      console.log(`User joined conversation ${conversationId}`, socket.user);
     });
 
     socket.on("sendMessage", async ({ conversationId, content }) => {
       if (!socket.user) {
         return socket.emit("error", "User not authenticated");
       }
+      if (!content) {
+        return socket.emit("error", "Message cannot be emty!");
+      }
       try {
         const senderId = socket.user.id;
-
-        console.log("sendMessage", { conversationId, content, senderId });
 
         // Create the message in the database
         const message = await Message.create({
@@ -47,16 +47,16 @@ const runSocket = (io) => {
           createdAt: new Date(), // Optional, as it will auto-generate if timestamps are used
         });
 
-        // Update the lastMessageId in the conversation
+        // // Update the lastMessageId in the conversation
         await Conversation.update(
-          { lastMessageId: message.id },
+          { lastMessageId: message?.dataValues?.id },
           { where: { id: conversationId } }
         );
 
         // Emit the message to all users in the conversation
         io.to(conversationId).emit("newMessage", {
-          user: socket.user.name, // Ensure you have access to the user's name
-          message: message, // Send the message object
+          user: socket.user.username, // Ensure you have access to the user's name
+          message: content, // Send the message object
         });
       } catch (error) {
         console.error("Message sending error:", error);
