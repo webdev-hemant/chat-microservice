@@ -7,7 +7,7 @@ const {
 const { getUserDetails } = require("../middleware/getUserDetails"); // Your existing middleware
 
 // Fetch conversations
-router.get("/", getUserDetails, getConversations);
+router.get("/:userId", getConversations);
 
 // Create a new conversation
 router.post("/create", getUserDetails, createConversation);

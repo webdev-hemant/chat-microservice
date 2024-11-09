@@ -28,7 +28,7 @@ exports.createConversation = async (req, res) => {
 
 exports.getConversations = async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.params.userId;
 
     const conversations = await Conversation.findAll({
       where: {
